@@ -25,6 +25,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Desabilita CSRF
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() // Permite acesso público à autenticação
+                        .requestMatchers(
+                                "/swagger-ui/**", // Permite acesso ao Swagger UI
+                                "/v3/api-docs/**", // Permite acesso à documentação OpenAPI
+                                "/swagger-resources/**", // Permite acesso aos recursos do Swagger
+                                "/webjars/**"
+                        ).permitAll()
                         .requestMatchers("/users/**").hasRole("ADMIN") // Apenas ADMIN pode acessar /users
                         .anyRequest().authenticated() // Todas as outras rotas precisam de login
                 )
